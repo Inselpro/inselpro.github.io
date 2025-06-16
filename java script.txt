@@ -1,0 +1,51 @@
+java script
+
+// script.js
+// Obtención de referencias a los elementos HTML del calendario
+const calendarGrid = document.getElementById('calendarGrid');
+const currentMonthYear = document.getElementById('currentMonthYear');
+const prevMonthBtn = document.getElementById('prevMonth');
+const nextMonthBtn = document.getElementById('nextMonth');
+const eventForm = document.getElementById('eventForm');
+const eventDateInput = document.getElementById('eventDate');
+const addEventButton = document.getElementById('addEventButton');
+const cancelEventButton = document.getElementById('cancelEventButton');
+
+// Obtención de referencias a los elementos HTML para la gestión de clientes
+const newClientNameInput = document.getElementById('newClientName');
+const newClientContactInput = document.getElementById('newClientContact');
+const addClientButton = document.getElementById('addClientButton');
+const clientListUl = document.getElementById('clientList');
+const eventClientSelect = document.getElementById('eventClient'); // El select para elegir cliente en el formulario de evento
+
+// Variables para la fecha actual y para almacenar eventos y clientes
+let currentDate = new Date();
+// Carga eventos guardados en localStorage, o un array vacío si no hay
+let events = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+// Carga clientes guardados en localStorage, o un array vacío si no hay
+let clients = JSON.parse(localStorage.getItem('clients')) || [];
+
+// --- Funciones para el Calendario ---
+
+/**
+ * Renderiza el calendario para el mes y año actuales.
+ * Limpia el grid, calcula los días, añade los eventos y configura los listeners.
+ */
+function renderCalendar() {
+    // Resetea el contenido del grid del calendario y añade los nombres de los días de la semana
+    calendarGrid.innerHTML = `
+        <div class="day-name">Lun</div>
+        <div class="day-name">Mar</div>
+        <div class="day-name">Mié</div>
+        <div class="day-name">Jue</div>
+        <div class="day-name">Vie</div>
+        <div class="day-name">Sáb</div>
+        <div class="day-name">Dom</div>
+    `;
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth(); // 0-11 para enero-diciembre
+    const firstDayOfMonth = new Date(year, month, 1); // Primer día del mes
+    const lastDayOfMonth = new Date(year, month + 1, 0); // Último día del mes (día 0 del siguiente mes)
+
+    // Actualiza el texto de la cabecera con
